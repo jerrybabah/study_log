@@ -1,0 +1,13 @@
+{
+  "name": "study_log",
+  "version": "1.0.0",
+  "description": "공부한 기록을 보여줍니다.",
+  "main": "index.js",
+  "author": "BABA HIRONOBU",
+  "license": "MIT",
+  "private": true,
+  "workspaces": [
+    "server",
+    "client"
+  ]
+}
