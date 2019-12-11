@@ -1,0 +1,5 @@
+{
+  "exec": "NODE_ENV=development ts-node src/app.ts",
+  "watch": ["src/*", "public/*"],
+  "ext": "js, ts, json, html, css"
+}
