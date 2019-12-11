@@ -1,6 +1,7 @@
 import * as path from 'path';
 import * as http from 'http';
 import logger from './utils/logger';
+import config from './config';
 
 // express와 미들웨어 임포트
 import * as express from 'express';
@@ -12,14 +13,16 @@ import * as cookieParser from 'cookie-parser';
 import * as mongoose from 'mongoose';
 
 const createApp = () => {
+  logger.info(config.get('test'));
+
   const app = express();
 
-  app.use(cors()); // 개밯환경에 따라 설정 다르게 하기
+  app.use(cors()); // 개발환경에 따라 설정 다르게 하기
   app.use(morgan('dev')); // 개밯환경에 따라 설정 다르게 하기
   app.use(express.json());
   app.use(express.urlencoded({ extended: false }));
   app.use(cookieParser());
-  // 세션 설정 추가
+  // 세션 설정 추가 레디스? 몽고디비?
 
   app.get('/', (req, res) => {
     res.send('hello world');
@@ -50,7 +53,6 @@ const runServer = async (app: express.Express) => {
       useUnifiedTopology: true,
     });
     logger.info('Connected to mongod server');
-
   } catch (e) {
     logger.error(e);
     stopServer(server, mongoose);
