@@ -1,5 +1,4 @@
 import * as path from 'path';
-import * as http from 'http';
 import logger from './utils/logger';
 import config from './config';
 
@@ -10,9 +9,8 @@ import * as morgan from 'morgan';
 import * as cookieParser from 'cookie-parser';
 // import * as session from 'express-session';
 
-import * as mongoose from 'mongoose';
-
-const createApp = () => {
+// 테스트에 유용하게 하기 위해 함수로 만들어 두고 export 시킴
+export const createApp = () => {
   logger.info(config.get('test'));
 
   const app = express();
@@ -35,29 +33,4 @@ const createApp = () => {
   return app;
 };
 
-const stopServer = async (server: http.Server, db: typeof mongoose) => {
-  server.close(); // 비동기이지 않나? 이렇게 두면 찝찝한데...
-  await db.disconnect();
-  process.exit();
-};
-
-const runServer = async (app: express.Express) => {
-  const port = process.env.PORT || '3000';
-  const server = app.listen(port, () => {
-    logger.info(`Node app is listening on port '${port}'`);
-  }); // port 중복에 대한 에러 핸들링은 하지 않음
-
-  try {
-    await mongoose.connect('mongodb://localhost:27017/study_log', {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    });
-    logger.info('Connected to mongod server');
-  } catch (e) {
-    logger.error(e);
-    stopServer(server, mongoose);
-  }
-};
-
-const studyLog = createApp();
-runServer(studyLog);
+export default createApp();
