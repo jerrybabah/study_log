@@ -3,7 +3,7 @@ import * as winston from 'winston';
 import { Format } from 'logform';
 import * as Transport from 'winston-transport';
 
-const level: string = 'info';
+const level = 'info';
 
 let format: Format;
 if (process.env.NODE_ENV === 'production') {
